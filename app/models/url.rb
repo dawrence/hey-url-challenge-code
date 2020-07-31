@@ -30,6 +30,7 @@ class Url < ApplicationRecord
 
   def stats
     {
+      shortUrl:  short_url,
       clicks_per_day: clicks_per_day,
       browsers: browsers,
       platforms: platforms

@@ -6,18 +6,21 @@ function UrlList(props) {
   const isLoaded = props.itemsLoaded;
   const [error, setError] = useState(props.error);
   const [stats, setStats] = useState(null);
+  const [statsToggle, setStatsToggle] = useState(null);
+
 
   const showStats = (e, shortUrl) => {
     e.preventDefault();
     fetch(`api/v1/stats/${shortUrl}`)
       .then(res => res.json())
       .then((result) => {
-        setStats(result.data);
-        is
+        setStats(result);
+        setStatsToggle(result['shortUrl'])
       },
 
       (error) => {
         setStats(null);
+        setStatsToggle(null)
         setError(error);
       })
   };
@@ -72,7 +75,7 @@ function UrlList(props) {
                         <path fillRule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"></path>
                       </svg>
                     </a>
-                    <Stats stats={stats}/>
+                    <Stats stats={stats} statsId={item.attributes['short-url']} statsToggle={statsToggle}/>
                   </td>
                 </tr>
               );
